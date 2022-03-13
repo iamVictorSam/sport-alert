@@ -15,25 +15,8 @@ class _InitScreenState extends State<InitScreen> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
         splash: SizedBox(
-          child: Column(
-            children: [
-              Expanded(
-                child: Image.asset('assets/purplespoticon.png',
-                    width: double.infinity, height: double.infinity),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
-                  'Sport Alert',
-                  style: TextStyle(
-                      color: Colors.yellow,
-                      fontSize: 25,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
+          child:
+              Image.asset('assets/purplespoticon.png', width: 150, height: 150),
         ),
         splashIconSize: 280.0,
         splashTransition: SplashTransition.scaleTransition,
