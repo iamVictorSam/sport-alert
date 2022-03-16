@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool check = false;
+  bool isloading = false;
   void initState() {
     setState(() {
       check = true;
@@ -25,14 +26,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Home'),
       // ),
       body: SafeArea(
-        child: WebView(
-          initialUrl: 'https://app.spotalertweb.com/login',
-          javascriptMode: JavascriptMode.unrestricted,
+        child: Stack(
+          children: [
+            WebView(
+              initialUrl: 'https://app.spotalertweb.com/login',
+              javascriptMode: JavascriptMode.unrestricted,
+              onProgress: (int progress) {
+                setState(() {
+                  isloading = true;
+                });
+                debugPrint('progressing $progress');
+              },
+              onPageFinished: (String done) {
+                print('done $done');
+                setState(() {
+                  isloading = false;
+                });
+              },
+              onPageStarted: (String done) {
+                print('started $done');
+                setState(() {
+                  isloading = true;
+                });
+              },
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: isloading == true
+                  ? const CircularProgressIndicator()
+                  : Container(),
+            )
+          ],
         ),
       ),
     );
