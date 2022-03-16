@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -13,23 +15,60 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool check = false;
-  bool isloading = false;
-  void initState() {
+  int _currentIndex = 0;
+  final List _children = [Home(), Market()];
+  void onTabTapped(int index) {
     setState(() {
-      check = true;
+      _currentIndex = index;
     });
-    GetStorage().write('check', check);
-    super.initState();
-    // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Home'),
-      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped, // new
+        currentIndex: _currentIndex, // n
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart_sharp),
+            label: 'Market',
+          ),
+        ],
+      ),
+      body: _children[_currentIndex],
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    // setState(() {
+    //   check = true;
+    // });
+    // GetStorage().write('check', check);
+    super.initState();
+    // Enable virtual display.
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+  }
+
+  bool isloading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
@@ -40,18 +79,79 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {
                   isloading = true;
                 });
-                debugPrint('progressing $progress');
               },
               onPageFinished: (String done) {
-                print('done $done');
                 setState(() {
                   isloading = false;
                 });
               },
               onPageStarted: (String done) {
-                print('started $done');
                 setState(() {
                   isloading = true;
+                });
+              },
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: isloading == true
+                  ? const CircularProgressIndicator()
+                  : Container(),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Market extends StatefulWidget {
+  const Market({Key? key}) : super(key: key);
+
+  @override
+  State<Market> createState() => _MarketState();
+}
+
+class _MarketState extends State<Market> {
+  @override
+  void initState() {
+    // setState(() {
+    //   check = true;
+    // });
+    // GetStorage().write('check', check);
+    super.initState();
+    // Enable virtual display.
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+  }
+
+  bool isloading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            WebView(
+              initialUrl: 'https://app.spotalertweb.com/user/trade/market',
+              javascriptMode: JavascriptMode.unrestricted,
+              onProgress: (int progress) {
+                setState(() {
+                  isloading = true;
+                });
+              },
+              onPageFinished: (String done) {
+                setState(() {
+                  isloading = false;
+                });
+              },
+              onPageStarted: (String done) {
+                setState(() {
+                  isloading = true;
+                });
+              },
+              onWebResourceError: (e) {
+                setState(() {
+                  isloading = false;
                 });
               },
             ),
