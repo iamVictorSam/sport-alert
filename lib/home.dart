@@ -14,8 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool check = false;
+  bool check = true;
   int _currentIndex = 0;
+
   final List _children = [Home(), Market()];
   void onTabTapped(int index) {
     setState(() {
@@ -24,7 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    GetStorage().write('check', check);
+    print('this is check $check');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(GetStorage().read('check'));
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped, // new
@@ -53,12 +63,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool check = true;
   @override
   void initState() {
-    // setState(() {
-    //   check = true;
-    // });
-    // GetStorage().write('check', check);
+    setState(() {
+      check = true;
+    });
+    GetStorage().write('check', check);
     super.initState();
     // Enable virtual display.
     if (Platform.isAndroid) WebView.platform = AndroidWebView();

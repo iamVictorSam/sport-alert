@@ -23,46 +23,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             decoration: const BoxDecoration(
               color: Colors.purple,
             ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.86,
-                ),
-                // Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.86,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(SignUp());
-                        },
-                        child: const Text(
-                          'SIGN UP ',
-                          style: TextStyle(color: Colors.white),
+                  // Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 70.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(SignUp());
+                          },
+                          child: const Text(
+                            'SIGN UP ',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        width: 1,
-                        color: Color(0xff191D3A),
-                      ),
-                      // Text('SIGN UP ')
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(HomeScreen());
-                        },
-                        child: const Text('SIGN IN ',
-                            style: const TextStyle(color: Colors.white)),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          width: 1,
+                          color: Color(0xff191D3A),
+                        ),
+                        // Text('SIGN UP ')
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(HomeScreen());
+                          },
+                          child: const Text('SIGN IN ',
+                              style: const TextStyle(color: Colors.white)),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Container(

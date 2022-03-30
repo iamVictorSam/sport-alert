@@ -39,6 +39,7 @@ dependencies:
   get: ^4.6.1
   shared_preferences: ^2.0.13
   get_storage: ^2.0.3
+  local_auth: ^1.1.11
 
 dev_dependencies:
   flutter_test:
