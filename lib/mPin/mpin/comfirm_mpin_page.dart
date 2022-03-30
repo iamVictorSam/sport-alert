@@ -3,17 +3,34 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:sport_alert/home.dart';
-import 'package:sport_alert/mPin/mpin/comfirm_mpin_page.dart';
 import 'package:sport_alert/mPin/mpin/mpin_widget.dart';
+import 'package:sport_alert/onboarding.dart';
 import 'package:sport_alert/services/biometrics/auth.dart';
 
-class MPinPage extends StatefulWidget {
+class ConfirmMpin extends StatefulWidget {
   @override
-  _MPinPageState createState() => _MPinPageState();
+  _ConfirmMpinState createState() => _ConfirmMpinState();
 }
 
-class _MPinPageState extends State<MPinPage> {
+class _ConfirmMpinState extends State<ConfirmMpin> {
   MPinController mPinController = MPinController();
+  String pin = '0000';
+  bool check = false;
+
+  @override
+  void initState() {
+    setState(() {
+      pin = GetStorage().read('mPin');
+      if (GetStorage().hasData('check')) {
+        check = GetStorage().read('check');
+        print('this is check $check');
+      }
+    });
+    print('this is check $check');
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +60,7 @@ class _MPinPageState extends State<MPinPage> {
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
                   ),
-                  color: Colors.pinkAccent,
+                  color: Colors.purpleAccent,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -81,18 +98,25 @@ class _MPinPageState extends State<MPinPage> {
                       controller: mPinController,
                       onCompleted: (mPin) {
                         print('You entered -> $mPin');
+                        if (mPin == pin) {
+                          if (check == true) {
+                            Get.offAll(HomeScreen());
+                          } else {
+                            Get.offAll(const OnboardingScreen());
+                          }
+                          // showDialog(
 
-                        // Get.offAll(const Home());
-                        Get.to(ConfirmMpin());
-                        GetStorage().write('mPin', mPin);
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return const AlertDialog(
-                        //         title: Text('Pin Set Success'),
-                        //         content: Text('Go to next page'),
-                        //       );
-                        //     });
+                          //     context: context,
+                          //     builder: (context) {
+                          //       return AlertDialog(
+                          //         title: Text('Success'),
+                          //         content: Text('Go to next page'),
+                          //       );
+                          //     });
+                        } else {
+                          //animate wrong input
+                          mPinController.notifyWrongInput!();
+                        }
                       },
                     ),
                     // SizedBox(height: 32),
@@ -122,12 +146,36 @@ class _MPinPageState extends State<MPinPage> {
                             shrinkWrap: true,
                             childAspectRatio: 1.6,
                             children: [
-                              // MaterialButton(
-                              //   onPressed: () async {},
-                              //   textColor: Colors.black,
-                              //   child: const Icon(Icons.fingerprint),
-                              // ),
-                              Container(),
+                              MaterialButton(
+                                onPressed: () async {
+                                  // mPinController.addInput('$input');
+                                  // final isAuthenticated =
+                                  //     await LocalAuthApi.authentication();
+
+                                  final biometrics =
+                                      await LocalAuthApi.getBiometrics();
+
+                                  final hasFingerPrint = biometrics
+                                      .contains(BiometricType.fingerprint);
+
+                                  final hasFaceId =
+                                      biometrics.contains(BiometricType.face);
+
+                                  final isAuthenticated =
+                                      await LocalAuthApi.authentication();
+                                  if (isAuthenticated!) {
+                                    Get.offAll(HomeScreen());
+                                    print('true');
+                                  }
+                                  // if(!hasFaceId) {
+                                  //   return ;
+                                  // }else{
+
+                                  // }
+                                },
+                                textColor: Colors.black,
+                                child: const Icon(Icons.fingerprint),
+                              ),
                               buildMaterialButton(0),
                               MaterialButton(
                                 onPressed: () {
@@ -161,11 +209,11 @@ class _MPinPageState extends State<MPinPage> {
               ),
             ),
           ),
-          const SafeArea(
+          SafeArea(
             child: Align(
               alignment: Alignment.topCenter,
               child: Text(
-                'Unlock App',
+                check == true ? 'Unlock App' : 'Confirm Pin',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
