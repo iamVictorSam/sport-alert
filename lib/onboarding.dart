@@ -20,8 +20,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: Colors.purple,
+            decoration: BoxDecoration(
+              color: Colors.yellow.shade700,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           },
                           child: const Text(
                             'SIGN UP ',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                         Container(
@@ -58,7 +58,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Get.to(HomeScreen());
                           },
                           child: const Text('SIGN IN ',
-                              style: const TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.black)),
                         )
                       ],
                     ),

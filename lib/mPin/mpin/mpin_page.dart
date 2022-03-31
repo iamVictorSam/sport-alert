@@ -20,13 +20,13 @@ class _MPinPageState extends State<MPinPage> {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               //     gradient: LinearGradient(
               //   colors: [Colors.blue, Colors.purple, Colors.pink],
               //   begin: Alignment.topLeft,
               //   end: Alignment.bottomRight,
               // )
-              color: Colors.purple,
+              color: Colors.yellow.shade700,
               // image: DecorationImage(
               //     image: AssetImage(
               //       'assets/slpas.png',
@@ -43,7 +43,7 @@ class _MPinPageState extends State<MPinPage> {
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
                   ),
-                  color: Colors.pinkAccent,
+                  color: Colors.black,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -103,7 +103,7 @@ class _MPinPageState extends State<MPinPage> {
                           topRight: Radius.circular(20),
                           topLeft: Radius.circular(20),
                         ),
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       child: Column(
                         children: [
@@ -133,7 +133,7 @@ class _MPinPageState extends State<MPinPage> {
                                 onPressed: () {
                                   mPinController.delete!();
                                 },
-                                textColor: Colors.black,
+                                textColor: Colors.white,
                                 child: const Icon(Icons.backspace_outlined),
                               ),
                             ],
@@ -183,7 +183,7 @@ class _MPinPageState extends State<MPinPage> {
       onPressed: () {
         mPinController.addInput!('$input');
       },
-      textColor: Colors.black,
+      textColor: Colors.white,
       child: Text(
         '$input',
         style: const TextStyle(fontSize: 24),
