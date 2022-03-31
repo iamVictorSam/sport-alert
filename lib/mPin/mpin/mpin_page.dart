@@ -56,9 +56,9 @@ class _MPinPageState extends State<MPinPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                       child: Text(
-                        'Enter Your PIN to unlock App',
+                        'Create Your PIN to unlock App',
                         style: TextStyle(
-                          color: Colors.white12,
+                          color: Colors.white70,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -103,7 +103,7 @@ class _MPinPageState extends State<MPinPage> {
                           topRight: Radius.circular(20),
                           topLeft: Radius.circular(20),
                         ),
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       child: Column(
                         children: [
@@ -183,7 +183,7 @@ class _MPinPageState extends State<MPinPage> {
       onPressed: () {
         mPinController.addInput!('$input');
       },
-      textColor: Colors.white,
+      textColor: Colors.black,
       child: Text(
         '$input',
         style: const TextStyle(fontSize: 24),

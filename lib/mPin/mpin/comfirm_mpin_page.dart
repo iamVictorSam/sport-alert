@@ -14,13 +14,15 @@ class ConfirmMpin extends StatefulWidget {
 
 class _ConfirmMpinState extends State<ConfirmMpin> {
   MPinController mPinController = MPinController();
-  String pin = '0000';
+  String pin = '00000';
   bool check = false;
 
   @override
   void initState() {
     setState(() {
-      pin = GetStorage().read('mPin');
+      if (GetStorage().hasData('mPin')) {
+        pin = GetStorage().read('mPin');
+      }
       if (GetStorage().hasData('check')) {
         check = GetStorage().read('check');
         print('this is check $check');
@@ -173,7 +175,7 @@ class _ConfirmMpinState extends State<ConfirmMpin> {
 
                                   // }
                                 },
-                                textColor: Colors.white,
+                                textColor: Colors.black,
                                 child: const Icon(Icons.fingerprint),
                               ),
                               buildMaterialButton(0),
@@ -181,7 +183,7 @@ class _ConfirmMpinState extends State<ConfirmMpin> {
                                 onPressed: () {
                                   mPinController.delete!();
                                 },
-                                textColor: Colors.white,
+                                textColor: Colors.black,
                                 child: const Icon(Icons.backspace_outlined),
                               ),
                             ],
@@ -231,7 +233,7 @@ class _ConfirmMpinState extends State<ConfirmMpin> {
       onPressed: () {
         mPinController.addInput!('$input');
       },
-      textColor: Colors.white,
+      textColor: Colors.black,
       child: Text(
         '$input',
         style: const TextStyle(fontSize: 24),
